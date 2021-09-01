@@ -1,0 +1,54 @@
+{
+  "help": [
+    "-- `!help` | These are your commands.",
+    "-- `!about` | Info about this bot."
+  ],
+  "about": [
+    "• Version v0.1.0",
+    "• Author: ciripel _(Discord: Amitabha#0517)_",
+    "• Source Code: <https://github.com/SimplioOfficial/Cicerone>"
+  ],
+  "unknown": "Command not recognized. `!help` to get a list of my commands",
+  "default": "All the bot calls are allowed only in <#882668996476936192> channel or you can wisper me your secrets...",
+  "siousd": {
+    "default": "_The price of **1 SIO** is **",
+    "zero": "Welcome young one! We have all started with **0 SIO** zilions of aeons ago!",
+    "neg": "Hmm! Yup! I feel sorry for you! You owe **SIO**... I feel your pain friend!"
+  },
+  "banned_words": [
+    "Txid",
+    "DaX",
+    "IggiPop",
+    "elbizarro",
+    "Lubos_the",
+    "demzet",
+    "Amitabha",
+    "Pulkraba",
+    "storkandstars",
+    "Tarin",
+    "MarioW",
+    "tecwesty",
+    "BOT",
+    "Simplio",
+    "SIMPLIO",
+    "simplio",
+    "News",
+    "Wallet",
+    "Update",
+    "SIO"
+  ],
+  "ignored_ids": [
+    398512532895039499,
+    398885783395893258,
+    283899213845233664,
+    869550663204474911,
+    754797239418748998,
+    455093165225934888,
+    359782573066551320,
+    784032061316005919,
+    705093497740460072,
+    747726183080394782,
+    753880770942074890,
+    585687595522981888
+  ]
+}
