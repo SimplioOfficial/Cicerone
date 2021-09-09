@@ -18,7 +18,7 @@ with open("dev-diary.json") as data_file:
 # make sure .git folder is properly configured
 PATH_OF_GIT_REPO = PROJECT_PATH + "/.git"
 COMMIT_MESSAGE = "Last work at " + complete_list[-1]["created_at"][:-7]
-GIT_SSH_IDENTITY_FILE = os.path.expanduser('~/.ssh/id_rsa')
+GIT_SSH_IDENTITY_FILE = os.path.expanduser('~/.ssh/id_ed25519')
 GIT_SSH_CMD = f"ssh -i {GIT_SSH_IDENTITY_FILE}"
 
 
@@ -35,9 +35,9 @@ def git_push():
             origin.push()
         sha = repo.head.object.hexsha
         print(f"On branch master.\nPushed commit {sha}")
-    except Exception:
+    except Exception as exception:
         print(
-            "On branch master.\nYour branch is up to date with 'origin/master'.\nNothing to commit, working tree clean."
+            f"On branch master.\nYour branch is up to date with 'origin/master'.\nNothing to commit, working tree clean.\n {exception}"
         )
 
 
