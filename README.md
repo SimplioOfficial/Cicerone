@@ -3,9 +3,13 @@
 ### Discord bot for Simplio https://simplio.io/
 
 
-v.0.1.0 - deployed 02.09.2021
+v0.1.0 - deployed 02.09.2021
 - initial version
 - implemented these commands:
   help, about, ban (cicerone only), del (Amitabha only)
 - joining verification implemented
 - cicerone members name protection implemented
+
+v0.1.1 - deployed 09.09.2021
+- implemented 💻-dev-diary scanning
+- Implemented SimplioDevelopmentProgress repo maintaining

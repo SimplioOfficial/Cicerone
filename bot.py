@@ -39,8 +39,30 @@ def is_number(s):
         return False
 
 
+def save_diary_file(message):
+    with open("dev-diary.json") as data_file:
+        listed = json.load(data_file)
+    listed.append(message)
+    file = open("dev-diary.json", "w")
+    file.write(json.dumps(listed, indent=2, sort_keys=True, default=str))
+    file.close()
+
+
 @client.event
 async def on_message(msg):
+    # Bot will save all the messages in #💻-dev-diary channel into a text file
+    if msg.channel.id == 882693892254859274:
+
+        dictionar = {}
+        dictionar["author"] = msg.author.name
+        dictionar["created_at"] = msg.created_at
+        dictionar["content"] = msg.content
+        for i in range(len(msg.embeds)):
+            key = "embed_" + str(i)
+            dictionar[key] = msg.embeds[i].to_dict()
+        message = dictionar
+        save_diary_file(message)
+        return
     # We do not want the bot to respond to Bots or Webhooks
     if msg.author.bot:
         return
@@ -56,12 +78,12 @@ async def on_message(msg):
     args = msg.content[1:].split()
     cmd = args[0].lower()
 
-    # Bot runs in #bot-commands channel and private channels for everyone
+    # Bot runs in #🤖-bot-commands channel and private channels for everyone
     # Bot runs in all channels for specific roles
     if not (
         isinstance(msg.channel, discord.DMChannel)
-        or msg.channel.name == "bot-commands"
-        or "Cicerone" in [role.name for role in msg.author.roles]
+        or msg.channel.name == "🤖-bot-commands"
+        or "cicerone" in [role.name for role in msg.author.roles]
     ):
         message = f"{data['default']}"
         await msg.channel.send(message)
@@ -77,7 +99,7 @@ async def on_message(msg):
     elif (
         cmd == "ban"
         and isinstance(msg.channel, discord.TextChannel)
-        and "cicerone" in [role.name for role in msg.author.roles]
+        and msg.author.id == 359782573066551320
     ):
         if len(args) < 2:
             message = (
