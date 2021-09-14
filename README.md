@@ -3,9 +3,13 @@
 ### Discord bot for Simplio https://simplio.io/
 
 
+v0.1.2 - deployed 014.09.2021
+- implemented price channel
+- implemented members channels
+
 v0.1.1 - deployed 09.09.2021
 - implemented 💻-dev-diary scanning
-- Implemented SimplioDevelopmentProgress repo maintaining
+- implemented SimplioDevelopmentProgress repo maintaining
 
 v0.1.0 - deployed 02.09.2021
 - initial version

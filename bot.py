@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # Work with Python 3.7+
 
+import discord
 import logging
 import json
-
-import discord
+import asyncio
+from pycoingecko import CoinGeckoAPI
 
 
 logging.basicConfig(format="%(asctime)s | %(levelname)s:%(name)s:%(message)s",
@@ -21,6 +22,7 @@ TOKEN = auth["token"]
 BOT_PREFIX = "!"
 TICKER = "SIO"
 
+
 intents = discord.Intents(messages=True, guilds=True)
 intents.reactions = True
 intents.members = True
@@ -29,6 +31,7 @@ intents.presences = True
 intents.typing = False
 
 client = discord.Client(intents=intents)
+cg = CoinGeckoAPI()
 
 
 def is_number(s):
@@ -46,6 +49,31 @@ def save_diary_file(message):
     file = open("dev-diary.json", "w")
     file.write(json.dumps(listed, indent=2, sort_keys=True, default=str))
     file.close()
+
+
+async def update_members():
+    await client.wait_until_ready()
+    guild = client.get_guild(859581142159065128)
+    total_channel = client.get_channel(887310034969710623)
+    online_channel = client.get_channel(887310070088605766)
+    while not client.is_closed():
+        widget = await guild.widget()
+        online_members = len(widget.members)
+        total_members = guild.member_count
+        await total_channel.edit(name=f"Total Members: {total_members}")
+        await online_channel.edit(name=f"Online Members: {online_members}")
+        await asyncio.sleep(10)  # task runs every 10 seconds
+
+
+async def update_price():
+    await client.wait_until_ready()
+    guild = client.get_guild(859581142159065128)
+    price_channel = client.get_channel(887306329759297577)
+    while not client.is_closed():
+        sol_price = cg.get_price(ids='solana', vs_currencies='usd')[
+            "solana"]["usd"]
+        await price_channel.edit(name=f"SOL Price: {sol_price}$")
+        await asyncio.sleep(60)  # task runs every 60 seconds
 
 
 @client.event
@@ -95,7 +123,7 @@ async def on_message(msg):
     # -------- <about> --------
     elif cmd == "about":
         message = "\n".join(data["about"])
-    # -------- <ban(Cicerone rank only)> --------
+    # -------- <ban(Amitabha only)> --------
     elif (
         cmd == "ban"
         and isinstance(msg.channel, discord.TextChannel)
@@ -187,5 +215,7 @@ async def on_member_update(before, after):
 async def on_ready():
     print(f"Logged in as: {client.user.name} {{{client.user.id}}}")
 
+client.loop.create_task(update_members())
+client.loop.create_task(update_price())
 client.run(TOKEN)
 logging.info('----- Finished -----')
