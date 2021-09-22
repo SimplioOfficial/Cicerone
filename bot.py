@@ -5,7 +5,6 @@ from discord.ext import tasks
 import discord
 import logging
 import json
-import asyncio
 from pycoingecko import CoinGeckoAPI
 
 
@@ -63,8 +62,8 @@ async def update_members():
         widget = await guild.widget()
         online_members = len(widget.members)
         total_members = guild.member_count
-        await total_channel.edit(name=f"Total Members: {total_members}")
-        await online_channel.edit(name=f"Online Members: {online_members}")
+        await total_channel.edit(name=f"Total Members: {total_members}") and logging.info(f'Changed Total Members: {total_members}')
+        await online_channel.edit(name=f"Online Members: {online_members}") and logging.info(f'Changed Online Members: {online_members}')
 
 
 @tasks.loop(minutes=10)
@@ -76,7 +75,7 @@ async def update_price():
     while not client.is_closed():
         sol_price = cg.get_price(ids='solana', vs_currencies='usd')[
             "solana"]["usd"]
-        await price_channel.edit(name=f"SOL Price: {sol_price}$")
+        await price_channel.edit(name=f"SOL Price: {sol_price}$") and logging.info(f'Changed SOL Price: {sol_price}')
 
 
 @client.event
