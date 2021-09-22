@@ -62,7 +62,7 @@ async def update_members():
         total_members = guild.member_count
         await total_channel.edit(name=f"Total Members: {total_members}")
         await online_channel.edit(name=f"Online Members: {online_members}")
-        await asyncio.sleep(120)  # task runs every 120 seconds
+        await asyncio.sleep(360)  # task runs every 6 minutes
 
 
 async def update_price():
@@ -73,7 +73,7 @@ async def update_price():
         sol_price = cg.get_price(ids='solana', vs_currencies='usd')[
             "solana"]["usd"]
         await price_channel.edit(name=f"SOL Price: {sol_price}$")
-        await asyncio.sleep(180)  # task runs every 180 seconds
+        await asyncio.sleep(420)  # task runs every 7 minutes
 
 
 @client.event
