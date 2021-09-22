@@ -67,7 +67,7 @@ async def update_members():
         await online_channel.edit(name=f"Online Members: {online_members}")
 
 
-@tasks.loop(minutes=6)
+@tasks.loop(minutes=7)
 # task runs every 7 minutes
 async def update_price():
     await client.wait_until_ready()
