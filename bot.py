@@ -54,8 +54,7 @@ def save_diary_file(message):
 @tasks.loop(minutes=15)
 # task runs every 15 minutes
 async def update_members():
-    await client.wait_until_ready() and logging.info(f'Client is ready for members update!')
-    logging.info(f'Calling Members update')
+    await client.wait_until_ready()
     guild = client.get_guild(859581142159065128)
     total_channel = client.get_channel(887310034969710623)
     online_channel = client.get_channel(887310070088605766)
@@ -63,21 +62,20 @@ async def update_members():
         widget = await guild.widget()
         online_members = len(widget.members)
         total_members = guild.member_count
-        await total_channel.edit(name=f"Total Members: {total_members}") and logging.info(f'Changed Total Members: {total_members}')
-        await online_channel.edit(name=f"Online Members: {online_members}") and logging.info(f'Changed Online Members: {online_members}')
+        await total_channel.edit(name=f"Total Members: {total_members}")
+        await online_channel.edit(name=f"Online Members: {online_members}")
 
 
-@tasks.loop(minutes=10)
-# task runs every 10 minutes
+@tasks.loop(minutes=14)
+# task runs every 14 minutes
 async def update_price():
-    await client.wait_until_ready() and logging.info(f'Client is ready for price update!')
-    logging.info(f'Calling Price update')
+    await client.wait_until_ready()
     guild = client.get_guild(859581142159065128)
     price_channel = client.get_channel(887306329759297577)
     while not client.is_closed():
         sol_price = cg.get_price(ids='solana', vs_currencies='usd')[
             "solana"]["usd"]
-        await price_channel.edit(name=f"SOL Price: {sol_price}$") and logging.info(f'Changed SOL Price: {sol_price}')
+        await price_channel.edit(name=f"SOL Price: {sol_price}$")
 
 
 @client.event
@@ -219,7 +217,7 @@ async def on_member_update(before, after):
 async def on_ready():
     print(f"Logged in as: {client.user.name} {{{client.user.id}}}")
 
-update_members.start()
 update_price.start()
+update_members.start()
 client.run(TOKEN)
 logging.info('----- Finished -----')
