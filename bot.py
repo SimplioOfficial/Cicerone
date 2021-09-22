@@ -54,7 +54,8 @@ def save_diary_file(message):
 @tasks.loop(minutes=15)
 # task runs every 15 minutes
 async def update_members():
-    await client.wait_until_ready()
+    await client.wait_until_ready() and logging.info(f'Client is ready for members update!')
+    logging.info(f'Calling Members update')
     guild = client.get_guild(859581142159065128)
     total_channel = client.get_channel(887310034969710623)
     online_channel = client.get_channel(887310070088605766)
@@ -69,7 +70,8 @@ async def update_members():
 @tasks.loop(minutes=10)
 # task runs every 10 minutes
 async def update_price():
-    await client.wait_until_ready()
+    await client.wait_until_ready() and logging.info(f'Client is ready for price update!')
+    logging.info(f'Calling Price update')
     guild = client.get_guild(859581142159065128)
     price_channel = client.get_channel(887306329759297577)
     while not client.is_closed():
