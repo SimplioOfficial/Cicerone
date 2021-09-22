@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Work with Python 3.7+
 
+from discord.ext import tasks
 import discord
 import logging
 import json
@@ -51,6 +52,8 @@ def save_diary_file(message):
     file.close()
 
 
+@tasks.loop(minutes=6)
+# task runs every 6 minutes
 async def update_members():
     await client.wait_until_ready()
     guild = client.get_guild(859581142159065128)
@@ -62,9 +65,10 @@ async def update_members():
         total_members = guild.member_count
         await total_channel.edit(name=f"Total Members: {total_members}")
         await online_channel.edit(name=f"Online Members: {online_members}")
-        await asyncio.sleep(360)  # task runs every 6 minutes
 
 
+@tasks.loop(minutes=6)
+# task runs every 7 minutes
 async def update_price():
     await client.wait_until_ready()
     guild = client.get_guild(859581142159065128)
@@ -73,7 +77,6 @@ async def update_price():
         sol_price = cg.get_price(ids='solana', vs_currencies='usd')[
             "solana"]["usd"]
         await price_channel.edit(name=f"SOL Price: {sol_price}$")
-        await asyncio.sleep(420)  # task runs every 7 minutes
 
 
 @client.event
@@ -215,7 +218,7 @@ async def on_member_update(before, after):
 async def on_ready():
     print(f"Logged in as: {client.user.name} {{{client.user.id}}}")
 
-client.loop.create_task(update_members())
-client.loop.create_task(update_price())
+update_members.start()
+update_price.start()
 client.run(TOKEN)
 logging.info('----- Finished -----')
