@@ -51,30 +51,22 @@ def save_diary_file(message):
     file.close()
 
 
-@tasks.loop(minutes=16)
+@tasks.loop(minutes=15)
 # task runs every 15 minutes
-async def update_members():
+async def update_info_channels():
     await client.wait_until_ready()
     guild = client.get_guild(859581142159065128)
     total_channel = client.get_channel(887310034969710623)
     online_channel = client.get_channel(887310070088605766)
+    price_channel = client.get_channel(890480831653625917)
     while not client.is_closed():
         widget = await guild.widget()
         online_members = len(widget.members)
         total_members = guild.member_count
-        await total_channel.edit(name=f"Total Members: {total_members}")
-        await online_channel.edit(name=f"Online Members: {online_members}")
-
-
-@tasks.loop(minutes=30)
-# task runs every 30 minutes
-async def update_price():
-    await client.wait_until_ready()
-    guild = client.get_guild(859581142159065128)
-    price_channel = client.get_channel(890480831653625917)
-    while not client.is_closed():
         sol_price = cg.get_price(ids='solana', vs_currencies='usd')[
             "solana"]["usd"]
+        await total_channel.edit(name=f"Total Members: {total_members}")
+        await online_channel.edit(name=f"Online Members: {online_members}")
         await price_channel.edit(name=f"SOL Price: {sol_price}$")
 
 
@@ -217,7 +209,6 @@ async def on_member_update(before, after):
 async def on_ready():
     print(f"Logged in as: {client.user.name} {{{client.user.id}}}")
 
-update_price.start()
-update_members.start()
+update_info_channels.start()
 client.run(TOKEN)
 logging.info('----- Finished -----')
