@@ -71,7 +71,7 @@ async def update_members():
 async def update_price():
     await client.wait_until_ready()
     guild = client.get_guild(859581142159065128)
-    price_channel = client.get_channel(887306329759297577)
+    price_channel = client.get_channel(890480831653625917)
     while not client.is_closed():
         sol_price = cg.get_price(ids='solana', vs_currencies='usd')[
             "solana"]["usd"]
