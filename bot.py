@@ -51,7 +51,7 @@ def save_diary_file(message):
     file.close()
 
 
-@tasks.loop(minutes=15)
+@tasks.loop(minutes=16)
 # task runs every 15 minutes
 async def update_members():
     await client.wait_until_ready()
@@ -66,8 +66,8 @@ async def update_members():
         await online_channel.edit(name=f"Online Members: {online_members}")
 
 
-@tasks.loop(minutes=14)
-# task runs every 14 minutes
+@tasks.loop(minutes=30)
+# task runs every 30 minutes
 async def update_price():
     await client.wait_until_ready()
     guild = client.get_guild(859581142159065128)
