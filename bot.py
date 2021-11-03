@@ -59,15 +59,14 @@ async def update_info_channels():
     total_channel = client.get_channel(887310034969710623)
     online_channel = client.get_channel(887310070088605766)
     price_channel = client.get_channel(890480831653625917)
-    while not client.is_closed():
-        widget = await guild.widget()
-        online_members = len(widget.members)
-        total_members = guild.member_count
-        sol_price = cg.get_price(ids='solana', vs_currencies='usd')[
-            "solana"]["usd"]
-        await total_channel.edit(name=f"Total Members: {total_members}")
-        await online_channel.edit(name=f"Online Members: {online_members}")
-        await price_channel.edit(name=f"SOL Price: {sol_price}$")
+    widget = await guild.widget()
+    online_members = len(widget.members)
+    total_members = guild.member_count
+    sol_price = cg.get_price(ids='solana', vs_currencies='usd')[
+        "solana"]["usd"]
+    await total_channel.edit(name=f"Total Members: {total_members}")
+    await online_channel.edit(name=f"Online Members: {online_members}")
+    await price_channel.edit(name=f"SOL Price: {sol_price}$")
 
 
 @client.event
