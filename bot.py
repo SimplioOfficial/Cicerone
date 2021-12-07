@@ -104,7 +104,7 @@ async def on_message(msg):
     if not (
         isinstance(msg.channel, discord.DMChannel)
         or msg.channel.name == "🤖-bot-commands"
-        or "cicerone" in [role.name for role in msg.author.roles]
+        or "Core Team" in [role.name for role in msg.author.roles]
     ):
         message = f"{data['default']}"
         await msg.channel.send(message)
